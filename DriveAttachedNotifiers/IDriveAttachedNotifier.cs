@@ -6,6 +6,7 @@ public class DriveAttachedEventArgs : EventArgs
         DriveInfo = driveInfo;
     }
 }
+
 public interface IDriveAttachedNotifier
 {
     event EventHandler<DriveAttachedEventArgs> DriveAttached;

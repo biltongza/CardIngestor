@@ -24,9 +24,9 @@ public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
 
         var rawDfOutput = await df.StandardOutput.ReadToEndAsync();
         logger.LogTrace("Raw df output for {driveName}\n{rawOutput}", driveInfo.Name, rawDfOutput);
-        
+
         await df.WaitForExitAsync();
-        
+
         var matchingDfRecord = rawDfOutput
                                 .Split(Environment.NewLine)
                                 .Select(line => new DfRecord(line))
@@ -45,7 +45,7 @@ public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
         diskutil.StartInfo.ArgumentList.Add(matchingDfRecord.Filesystem);
         diskutil.StartInfo.RedirectStandardOutput = true;
         var diskutilStarted = diskutil.Start();
-        if(!diskutilStarted)
+        if (!diskutilStarted)
         {
             logger.LogWarning("couldn't start diskutil");
             return false;
@@ -57,9 +57,9 @@ public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
                             .Split(Environment.NewLine)
                             .Select(line => line.Trim().Split(':'))
                             .Where(x => x.Length == 2)
-                            .ToDictionary(x => x[0].Trim(), x=> x[1].Trim());
+                            .ToDictionary(x => x[0].Trim(), x => x[1].Trim());
 
-        if(!diskUtilOutput.TryGetValue("Removable Media", out var removableMediaValue))
+        if (!diskUtilOutput.TryGetValue("Removable Media", out var removableMediaValue))
         {
             logger.LogWarning("didn't find Removable Media key in diskutil output");
             return false;
