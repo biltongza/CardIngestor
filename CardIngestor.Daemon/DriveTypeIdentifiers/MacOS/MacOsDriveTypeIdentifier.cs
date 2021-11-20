@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Microsoft.Extensions.Logging;
+using System.IO.Abstractions;
 
 public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
 {
@@ -9,7 +9,7 @@ public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
         this.logger = logger;
     }
 
-    public async Task<bool> IsRemovableDrive(DriveInfo driveInfo)
+    public async Task<bool> IsRemovableDrive(IDriveInfo driveInfo)
     {
         var df = new Process();
         df.StartInfo.FileName = "df";

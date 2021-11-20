@@ -1,7 +1,9 @@
+using System.IO.Abstractions;
+
 public class DriveAttachedEventArgs : EventArgs
 {
-    public DriveInfo DriveInfo { get; init; }
-    public DriveAttachedEventArgs(DriveInfo driveInfo)
+    public IDriveInfo DriveInfo { get; init; }
+    public DriveAttachedEventArgs(IDriveInfo driveInfo)
     {
         DriveInfo = driveInfo;
     }
@@ -9,5 +11,5 @@ public class DriveAttachedEventArgs : EventArgs
 
 public interface IDriveAttachedNotifier
 {
-    event EventHandler<DriveAttachedEventArgs> DriveAttached;
+    event EventHandler<DriveAttachedEventArgs>? DriveAttached;
 }

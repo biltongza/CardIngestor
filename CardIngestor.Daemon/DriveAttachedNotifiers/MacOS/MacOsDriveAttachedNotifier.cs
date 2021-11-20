@@ -1,12 +1,12 @@
-using Microsoft.Extensions.Logging;
+using System.IO.Abstractions;
 
 public class MacOsDriveAttachedNotifier : IDriveAttachedNotifier
 {
-    public event EventHandler<DriveAttachedEventArgs> DriveAttached;
+    public event EventHandler<DriveAttachedEventArgs>? DriveAttached;
 
-    public MacOsDriveAttachedNotifier(ILogger<MacOsDriveAttachedNotifier> logger)
+    public MacOsDriveAttachedNotifier(ILogger<MacOsDriveAttachedNotifier> logger, IFileSystem fileSystem)
     {
-        FileSystemWatcher watcher = new FileSystemWatcher("/Volumes/");
+        var watcher = fileSystem.FileSystemWatcher.CreateNew("/Volumes/");
         watcher.NotifyFilter = NotifyFilters.DirectoryName;
         watcher.Created += (sender, e) =>
         {
@@ -17,11 +17,10 @@ public class MacOsDriveAttachedNotifier : IDriveAttachedNotifier
                 return;
             }
 
-            DriveInfo driveInfo;
-
+            IDriveInfo driveInfo;
             try
             {
-                driveInfo = new DriveInfo(e.FullPath);
+                driveInfo = new DriveInfoWrapper(fileSystem, new DriveInfo(e.FullPath));
             }
             catch (ArgumentException ex)
             {
