@@ -1,7 +1,7 @@
 using System.IO.Abstractions;
 using Microsoft.Extensions.Hosting;
 
-public class IngestionOrchestrator : IHostedService
+public class DriveWatcher : IHostedService
 {
     private readonly ILogger logger;
     private readonly IDriveAttachedNotifier driveAttachedNotifier;
@@ -10,8 +10,8 @@ public class IngestionOrchestrator : IHostedService
     private readonly IngestionService ingestionService;
     private CancellationToken? cancellationToken;
 
-    public IngestionOrchestrator(
-        ILogger<IngestionOrchestrator> logger,
+    public DriveWatcher(
+        ILogger<DriveWatcher> logger,
         IDriveAttachedNotifier driveAttachedNotifier,
         IDriveTypeIdentifier driveTypeIdentifier,
         IFileSystem fileSystem,

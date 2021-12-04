@@ -8,9 +8,25 @@ public class MacOsDriveAttachedNotifier : IDriveAttachedNotifier
     {
         var watcher = fileSystem.FileSystemWatcher.CreateNew("/Volumes/");
         watcher.NotifyFilter = NotifyFilters.DirectoryName;
-        watcher.Created += (sender, e) =>
+        watcher.Deleted += (sender, e) =>
         {
-            logger.LogInformation("Got filesystem notification: {name}", e.FullPath);
+            logger.LogInformation("Got filesystem delete notification: {name}", e.FullPath);
+        };
+        watcher.Renamed += (sender, e) =>
+        {
+            logger.LogInformation("Got filesystem rename notification: {name}", e.FullPath);
+        };
+        watcher.Changed += async (sender, e) =>
+        {
+            logger.LogInformation("Got filesystem changed notification: {name}", e.FullPath);
+        };
+        watcher.Error += (sender, e) =>
+        {
+            logger.LogError(e.GetException(), "Error from FileSystemWatcher");
+        };
+        watcher.Created += async (sender, e) =>
+        {
+            logger.LogInformation("Got filesystem created notification: {name}", e.FullPath);
 
             if (string.IsNullOrEmpty(e.FullPath))
             {
@@ -30,6 +46,7 @@ public class MacOsDriveAttachedNotifier : IDriveAttachedNotifier
 
             if (DriveAttached != null)
             {
+                await Task.Delay(100);
                 DriveAttached.Invoke(this, new DriveAttachedEventArgs(driveInfo));
             }
         };

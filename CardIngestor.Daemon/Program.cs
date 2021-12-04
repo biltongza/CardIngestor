@@ -2,15 +2,29 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO.Abstractions;
+using System.Runtime.InteropServices;
 
 var builder = Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
-                    services.AddSingleton<IDriveTypeIdentifier, MacOsDriveTypeIdentifier>();
-                    services.AddSingleton<IDriveAttachedNotifier, MacOsDriveAttachedNotifier>();
+                    services.AddStrategies();
                     services.AddSingleton<IFileSystem, FileSystem>();
-                    services.AddHostedService<IngestionOrchestrator>();
+                    services.AddHostedService<DriveWatcher>();
                     services.AddSingleton<IngestionService>();
+                    services.AddSingleton<IEnvironment, Environment>();
+
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        services.SetupWindowsDependencies();
+                    }
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    {
+                        services.SetupMacOsDependencies();
+                    }
+                    else
+                    {
+                        throw new PlatformNotSupportedException("Only Windows and MacOS are supported, sorry! :(");
+                    }
                 });
 
 var host = builder.Build();

@@ -28,10 +28,10 @@ public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
         await df.WaitForExitAsync();
 
         var matchingDfRecord = rawDfOutput
-                                .Split(Environment.NewLine)
+                                .Split(System.Environment.NewLine)
                                 .Select(line => new DfRecord(line))
                                 .Where(record => record.IsValid)
-                                .FirstOrDefault(record => record.MountedOn.Equals(driveInfo.Name));
+                                .FirstOrDefault(record => record.MountedOn!.Equals(driveInfo.Name));
 
         if (matchingDfRecord == null)
         {
@@ -42,7 +42,7 @@ public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
         var diskutil = new Process();
         diskutil.StartInfo.FileName = "diskutil";
         diskutil.StartInfo.ArgumentList.Add("info");
-        diskutil.StartInfo.ArgumentList.Add(matchingDfRecord.Filesystem);
+        diskutil.StartInfo.ArgumentList.Add(matchingDfRecord.Filesystem!);
         diskutil.StartInfo.RedirectStandardOutput = true;
         var diskutilStarted = diskutil.Start();
         if (!diskutilStarted)
@@ -54,7 +54,7 @@ public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
         logger.LogTrace("Raw diskutil output for {driveName}\n{rawOutput}", driveInfo.Name, rawDiskutilOutput);
         await diskutil.WaitForExitAsync();
         var diskUtilOutput = rawDiskutilOutput
-                            .Split(Environment.NewLine)
+                            .Split(System.Environment.NewLine)
                             .Select(line => line.Trim().Split(':'))
                             .Where(x => x.Length == 2)
                             .ToDictionary(x => x[0].Trim(), x => x[1].Trim());

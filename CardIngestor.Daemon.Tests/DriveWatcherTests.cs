@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 public class IngestionOrchestratorTests
 {
-    private readonly IngestionOrchestrator driveWatcherService;
+    private readonly DriveWatcher driveWatcherService;
     private readonly TestDriveAttachedNotifier testDriveAttachedNotifier;
     private readonly Mock<IDriveTypeIdentifier> mockDriveTypeIdentifier;
     private readonly MockFileSystem mockFileSystem;
@@ -11,14 +11,14 @@ public class IngestionOrchestratorTests
 
     public IngestionOrchestratorTests()
     {
-        var logger = new Mock<ILogger<IngestionOrchestrator>>();
+        var logger = new Mock<ILogger<DriveWatcher>>();
         testDriveAttachedNotifier = new TestDriveAttachedNotifier();
         mockDriveTypeIdentifier = new Mock<IDriveTypeIdentifier>();
         mockFileSystem = new MockFileSystem();
         mockIngestionService = new Mock<IngestionService>(new Mock<ILogger<IngestionService>>().Object);
         mockIngestionService.Setup(x => x.Ingest(It.IsAny<IDriveInfo>(), It.IsAny<CancellationToken>()));
 
-        driveWatcherService = new IngestionOrchestrator(
+        driveWatcherService = new DriveWatcher(
             logger.Object,
             testDriveAttachedNotifier,
             mockDriveTypeIdentifier.Object,

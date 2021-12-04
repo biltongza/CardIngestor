@@ -2,20 +2,20 @@ using System.Text.RegularExpressions;
 public record DfRecord
 {
     private static readonly Regex Splitter = new Regex("\\s+");
-    public string Filesystem { get; init; }
-    public string Size { get; init; }
-    public string Used { get; init; }
-    public string Avail { get; init; }
-    public string Capacity { get; init; }
-    public string iused { get; init; }
-    public string ifree { get; init; }
-    public string MountedOn { get; init; }
+    public string? Filesystem { get; init; }
+    public string? Size { get; init; }
+    public string? Used { get; init; }
+    public string? Avail { get; init; }
+    public string? Capacity { get; init; }
+    public string? iused { get; init; }
+    public string? ifree { get; init; }
+    public string? MountedOn { get; init; }
     public bool IsValid { get; init; }
 
     public DfRecord(string line)
     {
         var parts = Splitter.Split(line);
-        if(parts.Length != 9)
+        if (parts.Length != 9)
         {
             IsValid = false;
             return;
