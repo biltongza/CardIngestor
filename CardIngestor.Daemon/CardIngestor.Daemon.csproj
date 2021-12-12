@@ -8,9 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExifLibNet" Version="2.1.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="System.IO.Abstractions" Version="13.2.47" />
+    <PackageReference Include="DarwinLog" Version="0.0.3">
+    </PackageReference>
   </ItemGroup>
 </Project>

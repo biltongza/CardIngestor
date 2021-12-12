@@ -25,6 +25,17 @@ var builder = Host.CreateDefaultBuilder(args)
                     {
                         throw new PlatformNotSupportedException("Only Windows and MacOS are supported, sorry! :(");
                     }
+                }).ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddSimpleConsole(c =>
+                    {
+                        c.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
+                    });
+                    logging.AddDarwinLogger(configure =>
+                    {
+                        configure.Subsystem = "CardIngestor.Daemon";
+                    });
                 });
 
 var host = builder.Build();
