@@ -3,7 +3,7 @@ using static Darwin.CopyFile;
 
 public class MacOsCopyProvider : ICopyProvider
 {
-    public bool SupportsProgressNotification => true;
+    public bool SupportsProgressNotification => false; // false until we can stop the crashes
 
     public event EventHandler<CopyProgressEventArgs>? CopyProgress;
     private readonly IFileSystem FileSystem;
@@ -15,6 +15,9 @@ public class MacOsCopyProvider : ICopyProvider
     public async Task Copy(IngestionOperation operation, CancellationToken cancellationToken)
     {
         using var state = new State();
+        // this currently causes a crash
+        // see https://github.com/dotnet/runtime/issues/62454
+
         // state.SetStatusCallback((Progress what, Stage stage, string source, string dest, State state) =>
         // {
         //     if (cancellationToken.IsCancellationRequested)
