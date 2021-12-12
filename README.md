@@ -50,3 +50,9 @@ An example config file follows:
 An ingestion strategy determines the destination for all of the source media that is identified. As an example, they can be used to group media based on specific attributes.
 
 At present, there is a single strategy provided: `FileCreationDateFolderIngestionStrategy`. It groups source files based on their file creation date, and puts the files in subfolders accordingly.
+
+## Roadmap
+
+[ ] Windows support
+[ ] Some sort of UI to configure ingestion
+[ ] UI to indicate ingestion progress
