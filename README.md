@@ -54,5 +54,6 @@ At present, there is a single strategy provided: `FileCreationDateFolderIngestio
 ## Roadmap
 
 - [ ] Windows support
+- [ ] Installers
 - [ ] Some sort of UI to configure ingestion
 - [ ] UI to indicate ingestion progress
