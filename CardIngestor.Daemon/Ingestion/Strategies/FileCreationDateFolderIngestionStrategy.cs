@@ -1,17 +1,16 @@
 using System.IO.Abstractions;
-using ExifLibrary;
 
-public class ImageCaptureDateFolderIngestionStrategy : IIngestionStrategy
+public class FileCreationDateFolderIngestionStrategy : IIngestionStrategy
 {
     private readonly IFileSystem FileSystem;
 
-    public ImageCaptureDateFolderIngestionStrategy(IFileSystem fileSystem)
+    public FileCreationDateFolderIngestionStrategy(IFileSystem fileSystem)
     {
         FileSystem = fileSystem;
     }
-    public async Task<IEnumerable<IngestionOperation>> GetIngestionOperations(IEnumerable<IFileInfo> fileList, IDictionary<string, string> parameters, CancellationToken cancellationToken)
+    public Task<IEnumerable<IngestionOperation>> GetIngestionOperations(IEnumerable<IFileInfo> fileList, IDictionary<string, string> parameters, CancellationToken cancellationToken)
     {
-        var operationTasks = fileList.Select(async source =>
+        var operations = fileList.Select(source =>
         {
             var destinationRoot = parameters["Destination"];
             DateTime imageDate = source.CreationTime;
@@ -21,8 +20,7 @@ public class ImageCaptureDateFolderIngestionStrategy : IIngestionStrategy
             return (imageDate, operation);
         });
 
-        var operations = await Task.WhenAll(operationTasks);
-
-        return operations.OrderBy(tuple => tuple.imageDate).Select(tuple => tuple.operation);
+        var orderedOperations = operations.OrderBy(tuple => tuple.imageDate).Select(tuple => tuple.operation);
+        return Task.FromResult(orderedOperations);
     }
 }
