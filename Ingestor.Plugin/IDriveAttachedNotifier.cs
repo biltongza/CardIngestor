@@ -1,5 +1,5 @@
 using System.IO.Abstractions;
-
+namespace Ingestor.Plugin;
 public class DriveAttachedEventArgs : EventArgs
 {
     public IDriveInfo DriveInfo { get; init; }

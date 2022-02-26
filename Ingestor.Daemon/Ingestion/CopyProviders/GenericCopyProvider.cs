@@ -1,3 +1,4 @@
+using Ingestor.Plugin;
 public class GenericCopyProvider : ICopyProvider
 {
     public bool SupportsProgressNotification => false;

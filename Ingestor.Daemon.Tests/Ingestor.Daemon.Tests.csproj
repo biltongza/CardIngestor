@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ingestor.Plugin\Ingestor.Plugin.csproj" />
     <ProjectReference Include="..\Ingestor.Daemon\Ingestor.Daemon.csproj" />
   </ItemGroup>
 
