@@ -1,4 +1,4 @@
-# CardIngestor
+# Ingestor
 
 ## About
 
