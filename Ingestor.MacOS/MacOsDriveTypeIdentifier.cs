@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO.Abstractions;
+namespace Ingestor.MacOS;
 
 public class MacOsDriveTypeIdentifier : IDriveTypeIdentifier
 {

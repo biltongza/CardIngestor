@@ -1,3 +1,4 @@
+namespace Ingestor.Windows;
 using System.ComponentModel;
 using System.IO.Abstractions;
 using System.Runtime.InteropServices;

@@ -1,5 +1,6 @@
 using System.IO.Abstractions;
 using static Darwin.CopyFile;
+namespace Ingestor.MacOS;
 
 public class MacOsCopyProvider : ICopyProvider
 {

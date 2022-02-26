@@ -1,4 +1,5 @@
 using System.IO.Abstractions;
+namespace Ingestor.MacOS;
 
 public class MacOsDriveAttachedNotifier : IDriveAttachedNotifier
 {

@@ -1,4 +1,6 @@
 using System.Text.RegularExpressions;
+namespace Ingestor.MacOS;
+
 public record DfRecord
 {
     private static readonly Regex Splitter = new Regex("\\s+");

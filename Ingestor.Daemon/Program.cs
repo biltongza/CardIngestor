@@ -1,8 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO.Abstractions;
-using System.Runtime.InteropServices;
 
 var builder = Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
@@ -12,19 +10,16 @@ var builder = Host.CreateDefaultBuilder(args)
                     services.AddHostedService<DriveWatcher>();
                     services.AddSingleton<IngestionService>();
                     services.AddSingleton<IEnvironment, Environment>();
-
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    {
-                        services.SetupWindowsDependencies();
-                    }
-                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                    {
-                        services.SetupMacOsDependencies();
-                    }
-                    else
-                    {
-                        throw new PlatformNotSupportedException("Only Windows and MacOS are supported, sorry! :(");
-                    }
+#if WINDOWS
+                    Console.WriteLine("Windows platform");
+                    services.SetupWindowsDependencies();
+#elif MACOS
+                    Console.WriteLine("MacOS platform");
+                    services.SetupMacOsDependencies();
+#else
+                    Console.WriteLine("Generic platform");
+                    throw new PlatformNotSupportedException("Only Windows and MacOS are supported, sorry! :(");
+#endif
                 }).ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
@@ -32,10 +27,9 @@ var builder = Host.CreateDefaultBuilder(args)
                     {
                         c.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
                     });
-                    logging.AddDarwinLogger(configure =>
-                    {
-                        configure.Subsystem = "CardIngestor.Daemon";
-                    });
+#if MACOS
+                    logging.SetupMacOsLogging();
+#endif
                 });
 
 var host = builder.Build();
