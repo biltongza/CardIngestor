@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
 
 public class IngestionOrchestratorTests
@@ -15,7 +17,13 @@ public class IngestionOrchestratorTests
         testDriveAttachedNotifier = new TestDriveAttachedNotifier();
         mockDriveTypeIdentifier = new Mock<IDriveTypeIdentifier>();
         mockFileSystem = new MockFileSystem();
-        mockIngestionService = new Mock<IngestionService>(new Mock<ILogger<IngestionService>>().Object);
+        mockIngestionService = new Mock<IngestionService>(
+            new Mock<ILogger<IngestionService>>().Object,
+            new Mock<IEnvironment>().Object,
+            new List<IIngestionStrategy>(),
+            new Mock<ICopyProvider>().Object,
+            mockFileSystem
+        );
         mockIngestionService.Setup(x => x.Ingest(It.IsAny<IDriveInfo>(), It.IsAny<CancellationToken>()));
 
         driveWatcherService = new DriveWatcher(
@@ -27,8 +35,7 @@ public class IngestionOrchestratorTests
         );
     }
 
-    [Fact]
-    [Trait("OS", "MacOS")]
+    [MacOsSpecificFact]
     public async Task ShouldIngestDrivesOnStartup_MacOS()
     {
         mockDriveTypeIdentifier.Setup(x => x.IsRemovableDrive(It.IsAny<IDriveInfo>())).Returns(Task.FromResult(true));
@@ -36,8 +43,7 @@ public class IngestionOrchestratorTests
         mockIngestionService.Verify(x => x.Ingest(It.Is<IDriveInfo>(driveInfo => driveInfo.RootDirectory.FullName == "/:"), It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [Fact]
-    [Trait("OS", "MacOS")]
+    [MacOsSpecificFact]
     public async Task ShouldIngestOnDriveAttached_MacOS()
     {
         var rootDirectory = "/Volumes/TestDrive";
@@ -46,5 +52,13 @@ public class IngestionOrchestratorTests
         var driveInfo = mockFileSystem.DriveInfo.FromDriveName("/Volumes/TestDrive");
         testDriveAttachedNotifier.AttachDrive(driveInfo);
         mockIngestionService.Verify(x => x.Ingest(It.Is<IDriveInfo>(driveInfo => driveInfo.RootDirectory.FullName == rootDirectory), It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [WindowsSpecificFact]
+    public async Task ShouldIngestDrivesOnStartup_Windows()
+    {
+        mockDriveTypeIdentifier.Setup(x => x.IsRemovableDrive(It.IsAny<IDriveInfo>())).Returns(Task.FromResult(true));
+        await driveWatcherService.StartAsync(new CancellationToken());
+        mockIngestionService.Verify(x => x.Ingest(It.Is<IDriveInfo>(driveInfo => driveInfo.RootDirectory.FullName == @"C:\"), It.IsAny<CancellationToken>()), Times.Once);
     }
 }

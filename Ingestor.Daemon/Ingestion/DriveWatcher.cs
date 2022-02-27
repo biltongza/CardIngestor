@@ -26,15 +26,17 @@ public class DriveWatcher : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        logger.LogInformation("Starting drive watcher");
+        logger.LogTrace("Starting drive watcher");
         this.cancellationToken = cancellationToken;
         driveAttachedNotifier.DriveAttached += DriveAttachedEventHandler;
         var drives = fileSystem.DriveInfo.GetDrives();
         foreach (var drive in drives)
         {
+            logger.LogTrace("Checking drive {drive}", drive.Name);
             var isRemovableDrive = await this.driveTypeIdentifier.IsRemovableDrive(drive);
             if (isRemovableDrive)
             {
+                logger.LogTrace("Drive {drive} is removable, starting ingestion", drive.Name);
                 await ingestionService.Ingest(drive, cancellationToken);
             }
         }
@@ -42,7 +44,7 @@ public class DriveWatcher : IHostedService
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        logger.LogInformation("Stopping drive watcher");
+        logger.LogTrace("Stopping drive watcher");
         driveAttachedNotifier.DriveAttached -= DriveAttachedEventHandler;
         this.cancellationToken = null;
         return Task.CompletedTask;
@@ -51,15 +53,18 @@ public class DriveWatcher : IHostedService
 
     private async void DriveAttachedEventHandler(object? sender, DriveAttachedEventArgs args)
     {
+        logger.LogTrace("Received drive attached event");
         if (args.DriveInfo == null)
         {
             return;
         }
 
+        logger.LogTrace("DriveName = {drive}", args.DriveInfo.Name);
         var isRemovable = await this.driveTypeIdentifier.IsRemovableDrive(args.DriveInfo);
         if (isRemovable && this.cancellationToken.HasValue)
         {
-            await ingestionService.Ingest(args.DriveInfo, this.cancellationToken.Value);
+            logger.LogTrace("Drive {drive} is removable, starting ingestion", args.DriveInfo.Name);
+            await ingestionService.Ingest(args.DriveInfo, this.cancellationToken!.Value);
         }
     }
 }
