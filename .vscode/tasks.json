@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/CardIngestor.Daemon/CardIngestor.Daemon.csproj",
+                "${workspaceFolder}/Ingestor.Daemon/Ingestor.Daemon.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/CardIngestor.Daemon/CardIngestor.Daemon.csproj",
+                "${workspaceFolder}/Ingestor.Daemon/Ingestor.Daemon.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/CardIngestor.Daemon/CardIngestor.Daemon.csproj",
+                "${workspaceFolder}/Ingestor.Daemon/Ingestor.Daemon.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
