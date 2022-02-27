@@ -11,8 +11,12 @@ The architecture also allows for customization of the ingestion process, but so 
 The program runs as a background service, monitoring for any removable drives that get attached to the system, and then checking if the drive has a config file that tells the program what to ingest, how to do it, and where to put the media.
 
 ## Usage
+Windows:
+`dotnet run -f net6.0-windows`
+Mac:
+`dotnet run -f net6.0-macos`
 
-`dotnet run` is all you need. Proper installation support is planned.
+Proper installation support is planned.
 
 ## Configuration
 
@@ -53,7 +57,7 @@ At present, there is a single strategy provided: `FileCreationDateFolderIngestio
 
 ## Roadmap
 
-- [ ] Windows support
+- [x] Windows support
 - [ ] Installers
 - [ ] Some sort of UI to configure ingestion
 - [ ] UI to indicate ingestion progress
