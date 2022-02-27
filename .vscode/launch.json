@@ -9,13 +9,17 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/CardIngestor.Daemon/bin/Debug/net6.0/CardIngestor.Daemon.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/CardIngestor.Daemon",
+            "cwd": "${workspaceFolder}/Ingestor.Daemon",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "windows": {
+                "program": "${workspaceFolder}/Ingestor.Daemon/bin/Debug/net6.0-windows/Ingestor.Daemon.dll",
+            },
+            "osx": {
+                "program": "${workspaceFolder}/Ingestor.Daemon/bin/Debug/net6.0-macos/Ingestor.Daemon.dll"
+            }
         },
         {
             "name": ".NET Core Attach",
