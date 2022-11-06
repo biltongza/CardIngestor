@@ -5,6 +5,7 @@
     <TargetFrameworks>net6.0;net6.0-macos;net6.0-windows</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <ApplicationId>com.ngestor</ApplicationId>
   </PropertyGroup>
 
   <ItemGroup>
