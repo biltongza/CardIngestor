@@ -10,15 +10,15 @@
             "request": "launch",
             "preLaunchTask": "build",
             "args": [],
-            "cwd": "${workspaceFolder}/Ingestor.Daemon",
+            "cwd": "${workspaceFolder}/Ngestor.Daemon",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
             "windows": {
-                "program": "${workspaceFolder}/Ingestor.Daemon/bin/Debug/net6.0-windows/Ingestor.Daemon.dll",
+                "program": "${workspaceFolder}/Ngestor.Daemon/bin/Debug/net6.0-windows/Ngestor.Daemon.dll",
             },
             "osx": {
-                "program": "${workspaceFolder}/Ingestor.Daemon/bin/Debug/net6.0-macos/Ingestor.Daemon.dll"
+                "program": "${workspaceFolder}/Ngestor.Daemon/bin/Debug/net6.0-macos/Ngestor.Daemon.dll"
             }
         },
         {

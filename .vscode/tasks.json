@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Ingestor.Daemon/Ingestor.Daemon.csproj",
+                "${workspaceFolder}/Ngestor.Daemon/Ngestor.Daemon.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Ingestor.Daemon/Ingestor.Daemon.csproj",
+                "${workspaceFolder}/Ngestor.Daemon/Ngestor.Daemon.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/Ingestor.Daemon/Ingestor.Daemon.csproj",
+                "${workspaceFolder}/Ngestor.Daemon/Ngestor.Daemon.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
