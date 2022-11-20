@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.Logging;
+using Ngestor.Daemon;
+using Ngestor.Daemon.Ingestion;
 
 public class IngestionOrchestratorTests
 {

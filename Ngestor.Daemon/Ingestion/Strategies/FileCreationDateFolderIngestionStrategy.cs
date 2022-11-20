@@ -1,4 +1,5 @@
 using System.IO.Abstractions;
+namespace Ngestor.Daemon.Ingestion.Strategies;
 
 public class FileCreationDateFolderIngestionStrategy : IIngestionStrategy
 {

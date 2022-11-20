@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Ngestor.Windows;
+namespace Ngestor.Daemon;
 public static class WindowsIntializer
 {
     public static IServiceCollection SetupWindowsDependencies(this IServiceCollection services)

@@ -1,6 +1,6 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-
+namespace Ngestor.Daemon;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddByConventionAsSingleton<T>(this IServiceCollection services)

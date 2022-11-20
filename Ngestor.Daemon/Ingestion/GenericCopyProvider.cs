@@ -1,4 +1,4 @@
-using Ngestor.Plugin;
+namespace Ngestor.Daemon.Ingestion;
 public class GenericCopyProvider : ICopyProvider
 {
     public bool SupportsProgressNotification => false;

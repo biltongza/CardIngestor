@@ -1,6 +1,8 @@
 using System.IO.Abstractions;
 using System.Text.Json;
+using Ngestor.Daemon.Config;
 
+namespace Ngestor.Daemon.Ingestion;
 public class IngestionService
 {
     private readonly ILogger logger;

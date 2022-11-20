@@ -1,6 +1,7 @@
 using System.IO.Abstractions;
 using Microsoft.Extensions.Hosting;
-
+using Ngestor.Plugin;
+namespace Ngestor.Daemon.Ingestion;
 public class DriveWatcher : IHostedService
 {
     private readonly ILogger logger;

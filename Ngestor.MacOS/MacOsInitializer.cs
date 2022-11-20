@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Ngestor.Plugin;
 using Ngestor.MacOS;
-
+namespace Ngestor.Daemon;
 public static class MacOsInitializerExtensions
 {
     public static IServiceCollection SetupMacOsDependencies(this IServiceCollection services)

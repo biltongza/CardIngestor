@@ -1,4 +1,5 @@
 #nullable disable
+namespace Ngestor.Daemon.Config;
 public record IngestDestination
 {
     public string MachineName { get; set; }

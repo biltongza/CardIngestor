@@ -1,8 +1,14 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.IO.Abstractions;
+using Ngestor.Daemon.Ingestion;
 
-var builder = Host.CreateDefaultBuilder(args)
+namespace Ngestor.Daemon;
+class Program
+{
+    public static async Task Main(string[] args)
+    {
+        var builder = Host.CreateDefaultBuilder(args)
                 .ConfigureServices(services =>
                 {
                     services.AddStrategies();
@@ -12,10 +18,10 @@ var builder = Host.CreateDefaultBuilder(args)
                     services.AddSingleton<IEnvironment, Environment>();
 #if WINDOWS
                     Console.WriteLine("Windows platform");
-                    services.SetupWindowsDependencies();
+                    WindowsIntializer.SetupWindowsDependencies(services);
 #elif MACOS
                     Console.WriteLine("MacOS platform");
-                    services.SetupMacOsDependencies();
+                    MacOsInitializerExtensions.SetupMacOsDependencies(services);
 #else
                     Console.WriteLine("Generic platform");
                     throw new PlatformNotSupportedException("Only Windows and MacOS are supported, sorry! :(");
@@ -28,10 +34,13 @@ var builder = Host.CreateDefaultBuilder(args)
                         c.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
                     });
 #if MACOS
-                    logging.SetupMacOsLogging();
+                    //logging.SetupMacOsLogging();
 #endif
                 });
 
-var host = builder.Build();
+        var host = builder.Build();
 
-await host.RunAsync();
+        await host.RunAsync();
+    }
+
+}
