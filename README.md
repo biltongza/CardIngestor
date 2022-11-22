@@ -12,11 +12,7 @@ The program runs as a background service, monitoring for any removable drives th
 
 ## Usage
 
-Windows:
-`dotnet run -f net6.0-windows`
-Mac:
-`dotnet run -f net6.0-macos`
-
+`dotnet run`
 Proper installation support is planned.
 
 ## Configuration
