@@ -13,6 +13,9 @@ The program runs as a background service, monitoring for any removable drives th
 ## Usage
 
 `dotnet run`
+
+Then insert media with a `.ingest.json` file on the root.
+
 Proper installation support is planned.
 
 ## Configuration
