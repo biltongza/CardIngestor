@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.IO.Abstractions;
 using Ngestor.Daemon.Ingestion;
+using System.Runtime.InteropServices;
 
 namespace Ngestor.Daemon;
 class Program
@@ -16,16 +17,22 @@ class Program
                     services.AddHostedService<DriveWatcher>();
                     services.AddSingleton<IngestionService>();
                     services.AddSingleton<IEnvironment, Environment>();
-#if WINDOWS
-                    Console.WriteLine("Windows platform");
-                    WindowsIntializer.SetupWindowsDependencies(services);
-#elif MACOS
-                    Console.WriteLine("MacOS platform");
-                    MacOsInitializerExtensions.SetupMacOsDependencies(services);
-#else
-                    Console.WriteLine("Generic platform");
-                    throw new PlatformNotSupportedException("Only Windows and MacOS are supported, sorry! :(");
-#endif
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        Console.WriteLine("Windows platform");
+                        WindowsIntializer.SetupWindowsDependencies(services);
+                    }
+                    else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    {
+                        Console.WriteLine("MacOS platform");
+                        MacOsInitializerExtensions.SetupMacOsDependencies(services);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Generic platform");
+                        throw new PlatformNotSupportedException("Only Windows and MacOS are supported, sorry! :(");
+                    }
+
                 }).ConfigureLogging(logging =>
                 {
                     logging.ClearProviders();
@@ -33,9 +40,11 @@ class Program
                     {
                         c.TimestampFormat = "[yyyy-MM-dd HH:mm:ss] ";
                     });
-#if MACOS
-                    //logging.SetupMacOsLogging();
-#endif
+
+                    // if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                    // {
+                    //     logging.SetupMacOsLogging();
+                    // }
                 });
 
         var host = builder.Build();

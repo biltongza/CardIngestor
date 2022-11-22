@@ -14,12 +14,7 @@
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false,
-            "windows": {
-                "program": "${workspaceFolder}/Ngestor.Daemon/bin/Debug/net6.0-windows/Ngestor.Daemon.dll",
-            },
-            "osx": {
-                "program": "${workspaceFolder}/Ngestor.Daemon/bin/Debug/net6.0-macos/Ngestor.Daemon.dll"
-            }
+            "program": "${workspaceFolder}/NGestor.Daemon/bin/Debug/net7.0/Ngestor.Daemon.dll"
         },
         {
             "name": ".NET Core Attach",

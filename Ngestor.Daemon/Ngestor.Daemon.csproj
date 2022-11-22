@@ -2,10 +2,9 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net7.0;net7.0-macos;net7.0-windows</TargetFrameworks>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <ApplicationId>com.ngestor</ApplicationId>
    </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -24,14 +23,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-      <ProjectReference Include="..\Ngestor.Plugin\Ngestor.Plugin.csproj">
-          <SetTargetFramework>TargetFramework=net7.0</SetTargetFramework>
-      </ProjectReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-macos'">
-    <ProjectReference Include="..\Ngestor.MacOS\Ngestor.MacOS.csproj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-windows'">
-    <ProjectReference Include="..\Ngestor.Windows\Ngestor.Windows.csproj" />
+      <ProjectReference Include="..\Ngestor.Plugin\Ngestor.Plugin.csproj" />
+      <ProjectReference Include="..\Ngestor.MacOS\Ngestor.MacOS.csproj" />
+      <ProjectReference Include="..\Ngestor.Windows\Ngestor.Windows.csproj" />
   </ItemGroup>
 </Project>
